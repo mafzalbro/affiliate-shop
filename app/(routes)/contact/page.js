@@ -7,6 +7,7 @@ import HeroSection from '@/app/components/HeroSection';
 const ContactPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [response, setResponse] = useState(null);
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,9 +16,10 @@ const ContactPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setIsSending(true)
     const res = await handleContactForm(formData);
     setResponse(res);
+    setIsSending(false)
   };
   
 
@@ -65,16 +67,18 @@ const ContactPage = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 disabled:bg-blue-400 disabled:cursor-wait"
+            disabled={isSending}
           >
-            Send
+            {isSending ? 'Sending...' : 'Send'}
           </button>
         </div>
         {response && (
           <div
             className={`mt-4 text-center ${
               response.success ? 'text-green-500' : 'text-red-500'
-            }`}
+            }
+            `}
           >
             {response.success ? 'Message sent successfully!' : 'Failed to send message'}
           </div>

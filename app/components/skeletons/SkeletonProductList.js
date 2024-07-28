@@ -1,8 +1,11 @@
 // components/SkeletonProductList.js
 import React from 'react';
+import SectionHeadingSkeleton from './SectionHeadingSkeleton';
 
 const SkeletonProductList = ({col, className}) => {
   return (
+    <>
+    <SectionHeadingSkeleton />
     <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${col} gap-6 ${className}`}>
       {Array.from({ length: 8 }).map((_, index) => (
         <div key={index} className="bg-gray-200 animate-pulse p-4 rounded-lg">
@@ -16,6 +19,7 @@ const SkeletonProductList = ({col, className}) => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 

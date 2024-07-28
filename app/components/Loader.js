@@ -1,11 +1,12 @@
 // components/Loader.js
 
 import React from 'react';
+import { FaSpinner } from 'react-icons/fa';
 
-export default function Loader() {
+export default function Loader({className}) {
   return (
-    <div className="flex justify-center items-center h-64">
-      <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
+    <div className={`flex justify-center items-center ${className}`}>
+      <FaSpinner className="text-blue-500 text-4xl animate-spin" />
     </div>
   );
 }

@@ -3,10 +3,10 @@ import mysql from 'mysql2/promise';
 // Function to create a new database connection
 export async function getConnection() {
   return mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'affiliate_shop',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
   });
 }
 

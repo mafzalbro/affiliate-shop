@@ -1,8 +1,11 @@
 // components/SkeletonProductSlider.js
 import React from 'react';
+import SectionHeadingSkeleton from './SectionHeadingSkeleton';
 
 const SkeletonProductSlider = () => {
   return (
+    <>
+    <SectionHeadingSkeleton />
     <div className="container mx-auto py-8">
       <h2 className="text-2xl font-bold mb-4 bg-gray-200 animate-pulse h-6 w-1/4"></h2>
       <div className="swiper-container">
@@ -17,6 +20,7 @@ const SkeletonProductSlider = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

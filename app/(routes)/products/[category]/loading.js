@@ -7,7 +7,7 @@ import SkeletonHeroSection from '@/app/components/skeletons/SkeletonHeroSection'
 const loading = () => {
   return (
     <>
-    <SkeletonHeroSection />
+    <SkeletonHeroSection desc button/>
       <div className="p-6">
         <SkeletonSearchBar />
         <SkeletonCategoryTabs />
