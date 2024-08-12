@@ -10,6 +10,15 @@ import Image from 'next/image';
 import { FaTag, FaTags } from 'react-icons/fa';
 import SectionHeading from './SectionHeading';
 
+// Utility function to truncate text
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return `${text.substring(0, maxLength)}...`;
+};
+
+
 // Component for rendering the slider
 const ProductSlider = ({ products }) => {
   return (
@@ -36,19 +45,19 @@ const ProductSlider = ({ products }) => {
                   src={product.image}
                   alt={product.title}
                   layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
+                  className="rounded-lg object-cover"
                 />
               </div>
-            <Link href={`/products/${product?.category?.split(' ')?.join('-')}/${product.slug}`}>
-              <h3 className="text-lg font-semibold mt-2 text-blue-500">{product.title}</h3>
-            </Link>
+
               <p className="text-gray-600">${product.price}</p>
             <Link href={`/products/${product?.category?.split(' ')?.join('-')}`}>
               <p className="text-sm text-gray-400 hover:text-blue-500 flex items-center gap-1 mt-1">
               <FaTag className="text-sm mr-1" /> {product.category}
               </p>
             </Link>
+              {product.title && <Link href={`/products/${product?.category?.split(' ')?.join('-')}/${product.slug}`}>
+             <h3 className="text-lg font-semibold mt-2 text-blue-500">{truncateText(product.title, 80)}</h3>
+            </Link>}
           </SwiperSlide>
         ))}
       </Swiper>

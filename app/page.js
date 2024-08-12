@@ -10,9 +10,12 @@ import HeroSection from './components/HeroSection';
 import Button from './components/Button';
 import Link from 'next/link';
 import { FaSearch, FaThLarge, FaListAlt, FaTags, FaArrowRight } from 'react-icons/fa';
+import { PiShoppingCartSimple } from "react-icons/pi";
+
 import SectionHeading from './components/SectionHeading'; // Import the new component
 
 export default async function HomePage({ searchParams }) {
+  const siteName = 'Pro Shop Hunt'
   const search = decodeURIComponent(searchParams?.q || '');
   const page = parseInt(decodeURIComponent(searchParams?.page || '1'), 10); // Default to page 1
   const selectedFilters = searchParams?.filters ? searchParams.filters.split(',') : [];
@@ -37,9 +40,10 @@ export default async function HomePage({ searchParams }) {
   return (
     <>
       <HeroSection 
-        title="Welcome to MySite!"
-        description="Discover amazing products and deals!"
-        link={{ href: "/products", text: "Shop Now" }}
+        title={`Welcome to ${siteName}!`}
+        description="Discover amazing products!"
+        link={{ href: "/products", text: "Explore Products" }}
+        art={<PiShoppingCartSimple className='text-blue-500 text-9xl'/>}
         className="py-16"
       />
       <div className='p-6'>

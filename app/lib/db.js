@@ -1,8 +1,5 @@
-import { query } from '@/app/lib/connect'
-// import { setupDatabase } from "@/app/lib/products"
-
-// setupDatabase().catch(console.error);
-
+import { query } from '@/app/lib/connect';
+import { notFound } from 'next/navigation';
 
 // Fetch categories
 export async function fetchCategories() {
@@ -70,14 +67,25 @@ export async function fetchProducts({ category = '', filters = [], page = 1, sea
 export async function fetchProductDetails(slug) {
   const sql = 'SELECT * FROM products WHERE slug = ?';
   const rows = await query(sql, [slug]);
+
+  if (rows.length === 0) {
+    notFound();
+  }
+
   return rows[0];
 }
 
-// Fetch the latest 5 products
+// Fetch random 5 products from the top 50 most recently added products
 export async function fetchNewProducts() {
-  const sql = 'SELECT * FROM products ORDER BY created_at DESC LIMIT 5';
+  // Step 1: Fetch the top 50 most recently added products
+  const sql = 'SELECT * FROM products ORDER BY created_at DESC LIMIT 50';
   const rows = await query(sql);
-  return rows;
+
+  // Step 2: Randomly select 5 products from the top 50
+  const shuffled = rows.sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, 5);
+
+  return selected;
 }
 
 // Fetch related products based on category
@@ -86,7 +94,7 @@ export async function fetchRelatedProducts(slug) {
   const productDetails = await fetchProductDetails(slug);
 
   if (!productDetails) {
-    throw new Error(`Product with slug ${slug} not found`);
+    notFound();
   }
 
   // Fetch products that belong to the same category, excluding the current product

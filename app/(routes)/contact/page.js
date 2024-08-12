@@ -20,6 +20,7 @@ const ContactPage = () => {
     const res = await handleContactForm(formData);
     setResponse(res);
     setIsSending(false)
+    setFormData({ name: '', email: '', message: '' })
   };
   
 
@@ -67,8 +68,8 @@ const ContactPage = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 disabled:bg-blue-400 disabled:cursor-wait"
-            disabled={isSending}
+            className={`w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 disabled:bg-blue-400 ${isSending ? 'disabled:cursor-wait' : 'disabled:cursor-not-allowed'}`}
+            disabled={isSending || formData.name === '' || formData.email === '' || formData.message === ''}
           >
             {isSending ? 'Sending...' : 'Send'}
           </button>

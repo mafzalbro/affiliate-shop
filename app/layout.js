@@ -1,30 +1,29 @@
-import { Inter, Poppins } from "next/font/google";
+import { Josefin_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import SiteNav from "./components/SiteNav";
 import Footer from "./components/Footer";
 import ProgressBar from "./components/ProgressBar";
 
-
-
-const poppins = Poppins({ subsets: ["latin"], weight: ['400', '700'], display: "swap"});
+const font = Outfit({ subsets: ["latin"], weight: [ '300', '400', '700'], display: "block"});
+const siteName = 'Pro Shop Hunt'
 
 export const metadata = {
-  title: "Affiliate Shop",
-  description: "Affiliate Shop",
+  title: siteName,
+  description: siteName,
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
 
-      <body className={poppins.className}>
-        <SiteNav />
+      <body className={font.className}>
+        <SiteNav siteName={siteName}/>
         <main>
           <ProgressBar >
               {children}
           </ProgressBar>
         </main>
-        <Footer />
+        <Footer siteName={siteName}/>
       </body>
     </html>
   );

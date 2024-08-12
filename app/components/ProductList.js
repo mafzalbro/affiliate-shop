@@ -34,7 +34,7 @@ export default function ProductList({ products }) {
 
   return (
     <>
-    <SectionHeading title="Products" icon={FaListAlt} />
+    <SectionHeading title="Products" icon={FaListAlt} id='products'/>
     <div className="p-4">
       {products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

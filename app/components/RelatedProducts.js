@@ -7,7 +7,7 @@ const RelatedProducts = async ({ slug }) => {
   const relatedProducts = await fetchRelatedProducts(slug);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-6 max-w-4xl mx-auto mt-10">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
         <FaTag className="text-blue-500 my-5" /> Related Products
       </h2>

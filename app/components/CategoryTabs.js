@@ -30,23 +30,23 @@ const iconMap = {
 export default function CategoryTabs({ categories, currentCategory, noHead }) {
   return (
     <>
-    { !noHead && <SectionHeading title="Categories" icon={FaThLarge} /> }
-    <div className="flex gap-4 flex-wrap my-10">
-      {categories.map((cat) => (
-        <Link key={cat} href={`/products/${cat.split(" ").join("-").toLowerCase()}`}>
-          <span
-            className={`transition duration-300 ease-in-out py-2 px-4 rounded-lg text-sm font-medium cursor-pointer flex items-center ${
-              currentCategory === cat
-              ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-              : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white'
-            }`}
+      {!noHead && <SectionHeading title="Categories" icon={FaThLarge} id='categories' />}
+      <div className="flex gap-4 flex-wrap my-10">
+        {categories.map((cat) => (
+          <Link key={cat} href={`/products/${cat.split(" ").join("-").toLowerCase()}`}>
+            <span
+              className={`transition duration-300 ease-in-out py-2 px-4 rounded-lg text-sm font-medium cursor-pointer flex items-center ${
+                currentCategory === cat
+                  ? 'bg-blue-500 text-white shadow-lg transform scale-105'
+                  : 'bg-blue-50 text-blue-500 hover:bg-blue-200 active:bg-blue-300'
+              }`}
             >
-            {iconMap[cat.toLowerCase()] && <span className="mr-2">{iconMap[cat.toLowerCase()]}</span>}
-            {cat}
-          </span>
-        </Link>
-      ))}
-    </div>
-      </>
+              {iconMap[cat.toLowerCase()] && <span className="mr-2">{iconMap[cat.toLowerCase()]}</span>}
+              {cat}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }

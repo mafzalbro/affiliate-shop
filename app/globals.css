@@ -6,6 +6,17 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* styles/globals.css or a dedicated CSS file */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.custom-spinner {
+  animation: spin 0.5s linear infinite;
+}
+
+
 #nprogress .peg {
   display: block;
   position: absolute;
@@ -18,3 +29,35 @@ body {
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
 }
+
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 9px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #e0f2fe; /* bg-blue-50: Light blue track color */
+  border-radius: 8px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e40af; /* bg-blue-500: Blue thumb color */
+  box-shadow: inset 1px 2px 2px rgb(0, 104, 165);
+  border-radius: 8px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6; /* bg-blue-600: Darker blue on hover */
+}
+
+::selection {
+  color: white;
+  background-color: #000000;
+}
+
+/* Firefox */
+/* * {
+  scrollbar-width: auto;
+  scrollbar-color: #60a5fa #e0f2fe; 
+} */

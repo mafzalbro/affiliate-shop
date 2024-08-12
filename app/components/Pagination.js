@@ -1,72 +1,91 @@
-// components/Pagination.js
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next-nprogress-bar';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 export default function Pagination({ currentPage, totalPages }) {
-  const range = (start, end) => Array.from({ length: end - start + 1 }, (_, i) => i + start);
-  
-  // Create a more manageable list of page numbers
-  let pages = [];
-  if (totalPages <= 5) {
-    pages = range(1, totalPages);
-  } else if (currentPage < 3) {
-    pages = range(1, 3).concat([0, totalPages]); // Show first pages, ellipses, and last page
-  } else if (currentPage > totalPages - 3) {
-    pages = range(totalPages - 3, totalPages); // Show last pages
-  } else {
-    pages = range(currentPage - 1, currentPage + 1).concat([0, totalPages]); // Show around current page
-  }
+  const router = useRouter();
+  const [pageNumbers, setPageNumbers] = useState([]);
 
-  if (totalPages <= 1) {
-    return null; // Hide pagination if there's only 1 or 0 pages
-  }
+  // Function to generate page numbers
+  const generatePageNumbers = () => {
+    let pages = [];
+
+    if (totalPages <= 5) {
+      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    } else {
+      if (currentPage < 4) {
+        pages = [1, 2, 3, 4, 5, '...', totalPages];
+      } else if (currentPage > totalPages - 3) {
+        pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+      } else {
+        pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+      }
+    }
+
+    return pages;
+  };
+
+  // Recalculate page numbers when currentPage or totalPages changes
+  useEffect(() => {
+    setPageNumbers(generatePageNumbers());
+  }, [currentPage, totalPages]);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber === '...') return; // Ignore ellipses
+    router.push(`?page=${pageNumber}`);
+  };
 
   return (
-    <div className="flex items-center justify-center gap-4 my-10">
-      {/* Previous Button */}
-      {currentPage > 1 && (
-        <Link href={`?page=${currentPage - 1}`} aria-disabled={currentPage === 1}>
+    <div className="flex flex-col items-center gap-4 my-10">
+      <div className="flex items-center gap-4 flex-wrap">
+        {/* Previous Button */}
+        {currentPage > 1 && (
           <span
-            className={`py-2 px-4 flex items-center gap-2 rounded-lg text-sm font-medium transition-colors duration-300 ${currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className={`py-2 px-4 flex items-center gap-2 rounded-lg text-sm font-medium transition-colors duration-300 cursor-pointer ${
+              currentPage === 1 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-50 text-blue-500 hover:bg-blue-200 active:bg-blue-300'
+            }`}
           >
             <FaChevronLeft />
-            Previous
+            {/* Previous */}
           </span>
-        </Link>
-      )}
+        )}
 
-      {/* Page Numbers */}
-      {pages.map((page, index) =>
-        page === 0 ? (
-          <span key={index} className="py-2 px-4 text-sm font-medium text-gray-700">...</span>
-        ) : (
-          <Link key={page} href={`?page=${page}`}>
+        {/* Page Numbers */}
+        {pageNumbers.map((page, index) =>
+          page === '...' ? (
+            <span key={index} className="py-2 px-4 text-sm font-medium text-blue-500">...</span>
+          ) : (
             <span
-              className={`py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300 ${
+              key={`page-${page}`} // Ensure unique key
+              onClick={() => handlePageChange(page)}
+              className={`py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300 cursor-pointer ${
                 currentPage === page
                   ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  : 'bg-blue-50 text-blue-500 hover:bg-blue-200 active:bg-blue-300'
               }`}
             >
               {page}
             </span>
-          </Link>
-        )
-      )}
+          )
+        )}
 
-      {/* Next Button */}
-      {currentPage < totalPages && (
-        <Link href={`?page=${currentPage + 1}`} aria-disabled={currentPage === totalPages}>
+        {/* Next Button */}
+        {currentPage < totalPages && (
           <span
-            className={`py-2 px-4 flex items-center gap-2 rounded-lg text-sm font-medium transition-colors duration-300 ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className={`py-2 px-4 flex items-center gap-2 rounded-lg text-sm font-medium transition-colors duration-300 cursor-pointer ${
+              currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-50 text-blue-500 hover:bg-blue-200 active:bg-blue-300'
+            }`}
           >
-            Next
+            {/* Next */}
             <FaChevronRight />
           </span>
-        </Link>
-      )}
+        )}
+      </div>
     </div>
   );
 }

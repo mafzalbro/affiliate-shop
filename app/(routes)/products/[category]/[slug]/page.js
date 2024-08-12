@@ -3,6 +3,7 @@ import ProductDetails from '@/app/components/ProductDetails';
 import HeroSection from '@/app/components/HeroSection';
 import Link from 'next/link';
 import { FaHome, FaProductHunt, FaShoppingBag, FaSmile } from 'react-icons/fa';
+import { MdArrowBack } from 'react-icons/md';
 
 // Function to fetch product details and return metadata
 export async function generateMetadata({ params }) {
@@ -57,7 +58,7 @@ export default async function ProductDetailsPage({ params }) {
         className="p-16"
         />
     <div className="container mx-auto p-4">
-      <Link href="/products">&larr; Back</Link>
+      <Link href="/products" className='flex items-center'><MdArrowBack className='mr-1'/> Back</Link>
       <ProductDetails product={product} slug={slug} />
     </div>
   </>
