@@ -1,5 +1,9 @@
-import { query } from '@/app/lib/connect';
+import { query } from '@/app/lib/connect'
 import { notFound } from 'next/navigation';
+// import { setupDatabase } from "@/app/lib/products"
+
+// setupDatabase().catch(console.error);
+
 
 // Fetch categories
 export async function fetchCategories() {
@@ -67,11 +71,6 @@ export async function fetchProducts({ category = '', filters = [], page = 1, sea
 export async function fetchProductDetails(slug) {
   const sql = 'SELECT * FROM products WHERE slug = ?';
   const rows = await query(sql, [slug]);
-
-  if (rows.length === 0) {
-    notFound();
-  }
-
   return rows[0];
 }
 
@@ -88,13 +87,14 @@ export async function fetchNewProducts() {
   return selected;
 }
 
+
 // Fetch related products based on category
 export async function fetchRelatedProducts(slug) {
   // First, get the details of the product with the given slug
   const productDetails = await fetchProductDetails(slug);
 
   if (!productDetails) {
-    notFound();
+    throw new Error(`Product with slug ${slug} not found`);
   }
 
   // Fetch products that belong to the same category, excluding the current product

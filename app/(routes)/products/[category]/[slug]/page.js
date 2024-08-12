@@ -4,6 +4,7 @@ import HeroSection from '@/app/components/HeroSection';
 import Link from 'next/link';
 import { FaHome, FaProductHunt, FaShoppingBag, FaSmile } from 'react-icons/fa';
 import { MdArrowBack } from 'react-icons/md';
+import { notFound } from 'next/navigation';
 
 // Function to fetch product details and return metadata
 export async function generateMetadata({ params }) {
@@ -27,24 +28,7 @@ export default async function ProductDetailsPage({ params }) {
   const { slug } = params
   const product = await fetchProductDetails(slug);
   if (!product) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[72vh] p-6 bg-gray-100">
-        <FaSmile className="text-yellow-500 text-6xl mb-4" />
-        <p className="text-gray-600 text-lg mb-4">Product not found</p>
-        <div className="flex gap-4">
-          <Link href='/'
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
-          >
-            <FaHome /> Go to Homepage
-          </Link>
-          <Link href='/'
-            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
-          >
-            <FaShoppingBag /> See Products
-          </Link>
-        </div>
-      </div>
-    );
+    notFound()
   }
 
   return (

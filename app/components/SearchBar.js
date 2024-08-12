@@ -56,7 +56,7 @@ export default function SearchBar({ search }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row my-10 w-full mx-auto relative">
-      <div className="relative flex-grow mb-2 sm:mb-0 sm:mr-2">
+      <div className="relative flex-grow mb-2 sm:mb-0 sm:mr-2" id='search'>
         <input
           type="text"
           name="search"
