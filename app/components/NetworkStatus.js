@@ -2,17 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 
- const isOnline = () => {
-    return window.navigator.onLine;
-  };
-  
 const NetworkStatus = () => {
-  const [online, setOnline] = useState(isOnline());
-  const [showOfflineMessage, setShowOfflineMessage] = useState(!online);
+  const [online, setOnline] = useState(true); // Start with true assuming we're online
+  const [showOfflineMessage, setShowOfflineMessage] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [retrying, setRetrying] = useState(false);
 
   useEffect(() => {
+    const isOnline = () => {
+      // Ensure window is defined before using it
+      return typeof window !== 'undefined' && window.navigator.onLine;
+    };
+
     const handleOnline = () => {
       setOnline(true);
       setRetrying(false);
@@ -27,7 +28,7 @@ const NetworkStatus = () => {
       setOnline(false);
       setShowOfflineMessage(true);
       setRetrying(true);
-      
+
       // Start retrying every 5 seconds
       const retryInterval = setInterval(() => {
         if (navigator.onLine) {
@@ -35,8 +36,8 @@ const NetworkStatus = () => {
           handleOnline();
         } else {
           setRetrying(true);
-          setShowOfflineMessage(false)
-          setShowSuccessMessage(false)
+          setShowOfflineMessage(true);
+          setShowSuccessMessage(false);
         }
       }, 5000);
 
@@ -48,7 +49,7 @@ const NetworkStatus = () => {
     window.addEventListener('offline', handleOffline);
 
     // Initial check
-    if (!online) {
+    if (!isOnline()) {
       handleOffline();
     }
 
@@ -56,7 +57,7 @@ const NetworkStatus = () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, [online]);
+  }, []);
 
   return (
     <div className='relative z-30'>
