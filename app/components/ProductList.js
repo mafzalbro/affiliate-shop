@@ -23,7 +23,7 @@ const NoProductsFoundIcon = () => (
   </svg>
 );
 
-export default function ProductList({ products }) {
+export default function ProductList({ products, noHead }) {
   if (!products) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -34,22 +34,22 @@ export default function ProductList({ products }) {
 
   return (
     <>
-    <SectionHeading title="Products" icon={FaListAlt} id='products'/>
-    <div className="p-4">
-      {products.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <Card key={product.slug} product={product} />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center h-[60vh]">
-          <NoProductsFoundIcon />
-          <p className="text-lg font-semibold text-gray-600 mb-2">No products found.</p>
-          <p className="text-gray-500">Try adjusting your search or filters.</p>
-        </div>
-      )}
-    </div>
+    {!noHead && <SectionHeading title="Products" icon={FaListAlt} id="products" />}
+      <div className="p-1">
+        {products.length > 0 ? (
+          <div className="flex flex-wrap">
+            {products.map((product) => (
+              <Card key={product.slug} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-[60vh]">
+            <NoProductsFoundIcon />
+            <p className="text-lg font-semibold text-gray-600 mb-2">No products found.</p>
+            <p className="text-gray-500">Try adjusting your search or filters.</p>
+          </div>
+        )}
+      </div>
     </>
   );
 }

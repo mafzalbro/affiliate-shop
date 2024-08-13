@@ -28,8 +28,6 @@ const ContactPage = () => {
     <>
       <HeroSection 
         title="Contact"
-        // description="Discover amazing products and deals!"
-        // link={{ href: "/products", text: "Shop Now" }}
         className="py-10"
       />
     <div className="w-full md:w-2/4 mx-auto p-8 bg-white rounded-lg min-h-[83vh] flex justify-center flex-col">

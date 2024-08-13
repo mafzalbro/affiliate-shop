@@ -5,7 +5,7 @@ import SkeletonHeroSection from '@/app/components/skeletons/SkeletonHeroSection'
 const loading = () => {
   return (
     <>
-        <SkeletonHeroSection button desc/>
+        <SkeletonHeroSection desc />
       <div className="p-6">
         <SkeletonProductDetails />
         <SkeletonProductList col={2} className="max-w-4xl mx-auto"/>

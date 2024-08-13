@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaTag, FaTags } from 'react-icons/fa';
 import SectionHeading from './SectionHeading';
+import Card from './Card';
 
 // Utility function to truncate text
 const truncateText = (text, maxLength) => {
@@ -35,29 +36,12 @@ const ProductSlider = ({ products }) => {
           320: { slidesPerView: 1 },
           640: { slidesPerView: 2 },
           768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
+          1248: { slidesPerView: 4 },
         }}
       >
         {products.map((product) => (
-          <SwiperSlide key={product.id} className="p-4 mb-10">
-              <div className="relative w-full overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  layout="fill"
-                  className="rounded-lg object-cover"
-                />
-              </div>
-
-              <p className="text-gray-600">${product.price}</p>
-            <Link href={`/products/${product?.category?.split(' ')?.join('-')}`}>
-              <p className="text-sm text-gray-400 hover:text-blue-500 flex items-center gap-1 mt-1">
-              <FaTag className="text-sm mr-1" /> {product.category}
-              </p>
-            </Link>
-              {product.title && <Link href={`/products/${product?.category?.split(' ')?.join('-')}/${product.slug}`}>
-             <h3 className="text-lg font-semibold mt-2 text-blue-500">{truncateText(product.title, 80)}</h3>
-            </Link>}
+          <SwiperSlide key={product.id} >
+              <Card key={product.id} product={product} noBG fullWidth/>
           </SwiperSlide>
         ))}
       </Swiper>

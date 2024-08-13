@@ -1,5 +1,4 @@
 import { FaHeart, FaRegHeart, FaAmazon } from 'react-icons/fa';
-import RelatedProducts from './RelatedProducts';
 import ShareButton from './ShareButton';
 import Link from 'next/link';
 
@@ -40,7 +39,7 @@ export default function ProductDetails({ product, slug }) {
             <ShareButton product={product} />
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">{product.title}</h1>
+        {/* <h1 className="text-3xl font-bold text-gray-800 mb-2">{product.title}</h1> */}
         <p className="text-gray-600 my-8">
           {product.description ? product.description : product.shortDescription}
         </p>
@@ -58,7 +57,6 @@ export default function ProductDetails({ product, slug }) {
         </Link>
             </div>
       </div>
-      <RelatedProducts slug={slug} />
     </>
   );
 }
