@@ -17,9 +17,8 @@ export async function fetchCategories() {
 }
 
 // Fetch products based on category, filters, page, and search query
-export async function fetchProducts({ category = '', filters = [], page = 1, search = '' } = {}) {
+export async function fetchProducts({ category = '', filters = [], page = 1, search = '', limit = 10 } = {}) {
   try {
-    const limit = 10;
     const offset = (page - 1) * limit;
 
     let sql = 'SELECT * FROM products WHERE 1=1';
@@ -67,6 +66,22 @@ export async function fetchProducts({ category = '', filters = [], page = 1, sea
     throw new Error('Failed to fetch products. Please try again later.');
   }
 }
+
+
+export async function loadMoreProducts({ page, filters, search }) {
+  try {
+    const { products, totalPages } = await fetchProducts({
+      filters,
+      search,
+      page
+    });
+    return { products, totalPages };
+  } catch (error) {
+    console.error('Error loading more products:', error);
+    throw new Error('Failed to load more products. Please try again later.');
+  }
+}
+
 
 // Fetch product details based on slug
 export async function fetchProductDetails(slug) {

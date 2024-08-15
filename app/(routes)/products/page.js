@@ -5,7 +5,6 @@ import { fetchCategories, fetchProducts } from '@/app/lib/db';
 import Pagination from '@/app/components/Pagination';
 import HeroSection from '@/app/components/HeroSection';
 
-
 // Function to fetch product details and return metadata
 export async function generateMetadata({ params, searchParams }) {
   const search = decodeURIComponent(searchParams?.q || '');
@@ -16,11 +15,11 @@ export async function generateMetadata({ params, searchParams }) {
   };
 }
 
-
 export default async function ProductsPage({ params, searchParams }) {
   const search = decodeURIComponent(searchParams?.q || '');
   const page = parseInt(decodeURIComponent(searchParams?.page || '1'), 10); // Default to page 1
   const selectedFilters = searchParams?.filters ? searchParams.filters.split(',') : [];
+  const limit = 30;
   
   // Fetch categories and new products
   const categories = await fetchCategories();
@@ -28,7 +27,8 @@ export default async function ProductsPage({ params, searchParams }) {
   const { products, totalPages } = await fetchProducts({  
     filters: selectedFilters, 
     search,
-    page 
+    page,
+    limit: limit
   });
 
   const filters = [
